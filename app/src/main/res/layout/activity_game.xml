@@ -4,19 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.example.maddash.HomeActivity">
-
-
-
-
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="127dp"
-        android:layout_height="50dp"
-        android:text="Button"
-        tools:layout_editor_absoluteX="129dp"
-        tools:layout_editor_absoluteY="202dp"
-        android:onClick="startGame"/>
+    tools:context="com.example.example.maddash.GameActivity">
 
 </android.support.constraint.ConstraintLayout>
