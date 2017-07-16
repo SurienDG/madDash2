@@ -1,11 +1,15 @@
 package com.example.example.maddash;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -29,18 +33,36 @@ public class GameView extends SurfaceView implements Runnable{
 
     Canvas canvas;
 
-    Bitmap bg;
+    Bitmap b;
 
     Paint paint;
 
     public GameView(Context context) {
         super(context);
 
+
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        HEIGHT = displayMetrics.heightPixels;
+        WIDTH = displayMetrics.widthPixels;
+
+
         paint = new Paint();
+
+        //b = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
+
+        //canvas = new Canvas();
 
         surfaceHolder = getHolder();
 
+
         running = true;
+
+        gameLevelManager = new GameLevelManager();
+
         start();
     }
 
@@ -54,7 +76,7 @@ public class GameView extends SurfaceView implements Runnable{
 
     @Override
     public void run() {
-        
+
         long start;
         long elapsed;
         while(running) {
@@ -78,13 +100,19 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     public void draw() {
+
+
+
+
         if (surfaceHolder.getSurface().isValid()) {
 
             // Lock the canvas ready to draw
             canvas = surfaceHolder.lockCanvas();
 
+            gameLevelManager.draw(canvas);
+
             // Draw the background color
-            canvas.drawColor(Color.argb(255,  26, 128, 182));
+            //canvas.drawColor(Color.argb(255,  26, 128, 182));
 
             // Choose the brush color for drawing
             paint.setColor(Color.argb(255,  249, 129, 0));
