@@ -10,6 +10,7 @@ import android.graphics.Point;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -42,28 +43,32 @@ public class GameView extends SurfaceView implements Runnable{
 
 
 
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager()
-                .getDefaultDisplay()
-                .getMetrics(displayMetrics);
-        HEIGHT = displayMetrics.heightPixels;
-        WIDTH = displayMetrics.widthPixels;
+
+
 
 
         paint = new Paint();
-
-        //b = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
-
-        //canvas = new Canvas();
 
         surfaceHolder = getHolder();
 
 
         running = true;
 
-        gameLevelManager = new GameLevelManager();
 
+        //start();
+    }
+
+    protected void init() {
+        gameLevelManager = new GameLevelManager(WIDTH, HEIGHT);
         start();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        HEIGHT = this.getHeight();
+        WIDTH = this.getWidth();
+        init();
+        Log.d(String.valueOf(HEIGHT), String.valueOf(WIDTH));
     }
 
     public void start() {
@@ -108,17 +113,18 @@ public class GameView extends SurfaceView implements Runnable{
 
             // Lock the canvas ready to draw
             canvas = surfaceHolder.lockCanvas();
+            paint.setColor(Color.argb(255,  249, 129, 0));
 
-            gameLevelManager.draw(canvas);
+            // Make the text a bit bigger
+            paint.setTextSize(45);
+            paint.setStrokeWidth(2);
+            gameLevelManager.draw(canvas, paint);
 
             // Draw the background color
             //canvas.drawColor(Color.argb(255,  26, 128, 182));
 
             // Choose the brush color for drawing
-            paint.setColor(Color.argb(255,  249, 129, 0));
 
-            // Make the text a bit bigger
-            paint.setTextSize(45);
 
             // Display the current fps on the screen
             canvas.drawText("FPS:" + fps, 20, 40, paint);
