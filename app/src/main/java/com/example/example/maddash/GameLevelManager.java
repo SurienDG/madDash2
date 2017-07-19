@@ -1,5 +1,6 @@
 package com.example.example.maddash;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,12 +15,12 @@ public class GameLevelManager {
 
     public Player player;
 
-    public GameLevelManager(int width, int height) {
+    public GameLevelManager(Context context, int width, int height) {
         leftBound = width / 10;
         rightBound = width / 10 * 9;
         upperBound = height / 10;
         lowerBound = height / 10 * 9;
-        player = new Player();
+        player = new Player(context);
     }
 
 
@@ -34,7 +35,7 @@ public class GameLevelManager {
         canvas.drawLine(leftBound, upperBound, leftBound, lowerBound, paint);
         canvas.drawLine(leftBound, lowerBound, rightBound, lowerBound, paint);
         canvas.drawLine(rightBound, upperBound, rightBound, lowerBound, paint);
-
+        player.draw(canvas, paint);
 
     }
 

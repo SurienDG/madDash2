@@ -38,9 +38,11 @@ public class GameView extends SurfaceView implements Runnable{
 
     Paint paint;
 
+    Context context;
+
     public GameView(Context context) {
         super(context);
-
+        this.context = context;
 
 
 
@@ -59,7 +61,7 @@ public class GameView extends SurfaceView implements Runnable{
     }
 
     protected void init() {
-        gameLevelManager = new GameLevelManager(WIDTH, HEIGHT);
+        gameLevelManager = new GameLevelManager(context, WIDTH, HEIGHT);
         start();
     }
 
